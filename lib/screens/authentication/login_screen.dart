@@ -1,6 +1,8 @@
 //Login Screen
-// This Screen has all the Login Logic f the application
+// This Screen has all the Login Logic of the application
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/screens/authentication/forgot_password_screen.dart';
+import 'package:nssf_e_wallet/screens/banking/home_page.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
 
@@ -9,7 +11,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final String? title="Login";
+  final String? title="Sign In";
   final TextEditingController _usernameTextFieldController = TextEditingController();
   final TextEditingController _passwordTextFieldController = TextEditingController();
   @override
@@ -64,17 +66,26 @@ class _LoginPageState extends State<LoginPage> {
 
                     ),
                     onPressed: () {
-                      //signup screen
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => const RegisterPage()),
-                      // );
+                      //Forgot password screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
+                      );
                     },
                   ),
                   const SizedBox(height: 2.0),
                   ElevatedButton(
                       onPressed: (){
+                        bool _isAuthenticated=true;
                         //Handle Login Logic here
+                        if(_isAuthenticated)
+                        {
+                          //Switch to Home Sceen
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomePage()),
+                          );
+                        }
                       },
                       child: const Text("Login"),
                       style: ElevatedButton.styleFrom(
