@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home :AnimatedSplashScreen(
-        duration: 10000,
+        duration: 3000,
         splash: Image.asset(
           'assets/images/logo.png',
           width: 300.0,
