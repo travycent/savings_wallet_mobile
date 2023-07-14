@@ -1,6 +1,10 @@
 //This is the home screen of the application
 import 'package:flutter/material.dart';
 import 'package:nssf_e_wallet/partials/bottom_navigation_handler.dart';
+import 'package:nssf_e_wallet/screens/banking/withdraw_page.dart';
+import 'package:nssf_e_wallet/screens/banking/add_deposit_page.dart';
+import 'package:nssf_e_wallet/screens/banking/send_page.dart';
+import 'package:nssf_e_wallet/screens/banking/paybill_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
 
@@ -107,7 +111,25 @@ class _HomePageState extends State<HomePage> {
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Center(child: Text('Deposit')),
+                    child: Center(
+                        child:TextButton(
+                          child: const Text(
+                              'Deposit',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize:12.0,
+                              ),
+                            ),
+                          onPressed: (){
+                            //Move to the withdraw screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder:(context) => const DepositPage()),
+                            );
+                          },
+                        ),
+                        
+                      ),
                   ),
                   Container(
                     height: 100,
@@ -117,7 +139,25 @@ class _HomePageState extends State<HomePage> {
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Center(child: Text('Send')),
+                    child: Center(
+                        child:TextButton(
+                          child: const Text(
+                              'Send',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize:12.0,
+                              ),
+                            ),
+                          onPressed: (){
+                            //Move to the withdraw screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder:(context) => const SendPage()),
+                            );
+                          },
+                        ),
+                        
+                      ),
                   ),
                   Container(
                     height: 100,
@@ -127,7 +167,25 @@ class _HomePageState extends State<HomePage> {
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Center(child: Text('Pay Bill')),
+                    child: Center(
+                        child:TextButton(
+                          child: const Text(
+                              'Pay Bill',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize:12.0,
+                              ),
+                            ),
+                          onPressed: (){
+                            //Move to the withdraw screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder:(context) => const WithdrawPage()),
+                            );
+                          },
+                        ),
+                        
+                      ),
                   ),
                   Container(
                     height: 100,
@@ -137,7 +195,25 @@ class _HomePageState extends State<HomePage> {
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Center(child: Text('Withdraw')),
+                    child: Center(
+                        child:TextButton(
+                          child: const Text(
+                              'Withdraw',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize:12.0,
+                              ),
+                            ),
+                          onPressed: (){
+                            //Move to the withdraw screen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder:(context) => const WithdrawPage()),
+                            );
+                          },
+                        ),
+                        
+                      ),
                   ),
                 ],
               ),

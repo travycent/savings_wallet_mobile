@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'YeloSave',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         duration: 3000,
         splash: Image.asset(
           'assets/images/logo.png',
-          width: 300.0,
+          width: 10000.0,
           height: 300.0,
           fit: BoxFit.cover,
         ),
