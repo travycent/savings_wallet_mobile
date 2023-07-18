@@ -8,6 +8,7 @@ import 'package:nssf_e_wallet/screens/banking/paybill_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_target_page.dart';
 import 'package:nssf_e_wallet/screens/banking/transactions_page.dart';
 import 'package:nssf_e_wallet/screens/banking/add_savings_preferences_page.dart';
+import 'package:nssf_e_wallet/screens/banking/savings_preferences_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({ Key? key }) : super(key: key);
 
@@ -183,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                             //Move to the withdraw screen
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder:(context) => const AddSavingsPreferencePage()),
+                              MaterialPageRoute(builder:(context) => const PayBillPage()),
                             );
                           },
                         ),
