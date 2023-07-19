@@ -10,26 +10,28 @@ import 'package:nssf_e_wallet/screens/banking/transactions_page.dart';
 import 'package:nssf_e_wallet/screens/banking/add_savings_preferences_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_preferences_page.dart';
 class HomePage extends StatefulWidget {
-  const HomePage({ Key? key }) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
-  final String? title = "Home";
-  final double gridHeightValue=60;
-  final double gridWidthValue=150;
+  final String title = "Home";
+  final double gridHeightValue = 60;
+  final double gridWidthValue = 150;
+  int _currentIndex = 0;
   double? activeWalletBalance = 1000000;
   double? savingWalletBalance = 1000000;
-  int _currentIndex = 0;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title!),
+        title: Text(title),
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
@@ -38,10 +40,9 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   height: 60,
                   margin: const EdgeInsets.all(2.0),
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(5.0),
-
                   ),
                   child: GridView.count(
                     crossAxisCount: 2,
@@ -55,19 +56,27 @@ class _HomePageState extends State<HomePage> {
                           children: <Widget>[
                             Container(
                               padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
                               child: const Text(
                                 'Active Wallet',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
-                              child:  Text(
+                              child: Text(
                                 activeWalletBalance!.toString(),
-                                style: const TextStyle(fontSize: 12),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ],
@@ -81,19 +90,27 @@ class _HomePageState extends State<HomePage> {
                           children: <Widget>[
                             Container(
                               padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
                               child: const Text(
                                 'Saving Wallet',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
                             Container(
                               padding: const EdgeInsets.all(8.0),
-                              child:  Text(
+                              child: Text(
                                 savingWalletBalance!.toString(),
-                                style: const TextStyle(fontSize: 12),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ],
@@ -132,13 +149,12 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    _buildGridItem('Deposit', const DepositPage()),
-                    _buildGridItem('Send', const SendPage()),
-                    _buildGridItem('Pay Bill', const PayBillPage()),
-                    _buildGridItem('Withdraw', const WithdrawPage()),
-                    _buildGridItem('Preferences', const SavingsPreferencesPage()),
-                    _buildGridItem('Target', const SavingsTargetPage()),
-                    
+                    _buildGridItem('Deposit', const DepositPage(), Colors.orange),
+                    _buildGridItem('Send', const SendPage(), Colors.red),
+                    _buildGridItem('Pay Bill', const PayBillPage(), Colors.purple),
+                    _buildGridItem('Withdraw', const WithdrawPage(), Colors.blue),
+                    _buildGridItem('Preferences', const SavingsPreferencesPage(), Colors.green),
+                    _buildGridItem('Target', const SavingsTargetPage(), Colors.teal),
                   ],
                 ),
               ],
@@ -170,11 +186,11 @@ class _HomePageState extends State<HomePage> {
             label: 'Screen 4',
           ),
         ],
-        
       ),
     );
   }
-  Widget _buildGridItem(String title, Widget page) {
+
+  Widget _buildGridItem(String title, Widget page, Color color) {
     return Container(
       height: gridHeightValue,
       width: gridWidthValue,
@@ -182,6 +198,7 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.circular(8.0),
+        color: color,
       ),
       child: TextButton(
         onPressed: () {
@@ -190,7 +207,7 @@ class _HomePageState extends State<HomePage> {
         child: Text(
           title,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16, color: Colors.white),
         ),
       ),
     );
