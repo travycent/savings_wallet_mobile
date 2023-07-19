@@ -6,7 +6,6 @@ import 'package:nssf_e_wallet/screens/banking/add_deposit_page.dart';
 import 'package:nssf_e_wallet/screens/banking/send_page.dart';
 import 'package:nssf_e_wallet/screens/banking/paybill_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_target_page.dart';
-import 'package:nssf_e_wallet/screens/banking/transactions_page.dart';
 import 'package:nssf_e_wallet/screens/banking/add_savings_preferences_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_preferences_page.dart';
 class HomePage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   final String title = "Home";
   final double gridHeightValue = 60;
   final double gridWidthValue = 150;
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   double? activeWalletBalance = 1000000;
   double? savingWalletBalance = 1000000;
 
@@ -163,29 +162,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationHandler(
+        currentIndex: _currentIndex,
         onTabSelected: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.screen_share),
-            label: 'Screen 2',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Screen 3',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Screen 4',
-          ),
-        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/partials/bottom_navigation_handler.dart';
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({ Key? key }) : super(key: key);
 
@@ -7,6 +8,7 @@ class TransactionsPage extends StatefulWidget {
 }
 class _TransactionsPageState extends State<TransactionsPage> {
   final String? title = "Transactions";
+   int _currentIndex = 0;
 
   // Sample data for dynamic text
   List<Map<String, String>> cardData = [
@@ -133,6 +135,14 @@ class _TransactionsPageState extends State<TransactionsPage> {
               ),
             );
           }
+        },
+      ),
+      bottomNavigationBar: BottomNavigationHandler(
+        currentIndex: _currentIndex,
+        onTabSelected: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
         },
       ),
     );
