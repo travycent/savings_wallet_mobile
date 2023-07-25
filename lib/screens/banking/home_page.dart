@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: const <Widget>[
                       Text(
-                        'Target Balance',
+                        'Target Amount',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                     _buildGridItem('Send', const SendPage(), Colors.red),
                     _buildGridItem('Pay Bill', const PayBillPage(), Colors.purple),
                     _buildGridItem('Withdraw', const WithdrawPage(), Colors.blue),
-                    _buildGridItem('Preferences', const SavingsPreferencesPage(), Colors.green),
+                    _buildGridItem('Preferences', const AddSavingsPreferencePage(), Colors.green),
                     _buildGridItem('Target', const SavingsTargetPage(), Colors.teal),
                   ],
                 ),
