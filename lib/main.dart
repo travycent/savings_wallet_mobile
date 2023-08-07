@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/providers/api_client.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:nssf_e_wallet/screens/authentication/login_screen.dart';
 
-void main() {
+
+Future <void> main() async{
+
+  // Initialize the environment variables
+  await loadEnvFile();
+  try {
+      await fetchData("get-customer-saving-target/centtravy@gmail.com");
+  } catch (e) {
+    print(e.toString());
+  }
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
