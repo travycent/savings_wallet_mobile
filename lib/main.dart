@@ -9,11 +9,11 @@ Future <void> main() async{
 
   // Initialize the environment variables
   await loadEnvFile();
-  try {
-      await fetchData("get-customer-saving-target/centtravy@gmail.com");
-  } catch (e) {
-    print(e.toString());
-  }
+  // try {
+  //     await fetchData("get-customer-saving-target/centtravy@gmail.com");
+  // } catch (e) {
+  //   print(e.toString());
+  // }
   runApp(const MyApp());
 
 }

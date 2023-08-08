@@ -93,3 +93,39 @@ Future<void> postData(String apiUrl,Map<String, dynamic> data) async{
   }
 
 }
+// Delete Data API Function
+Future<void> deleteData(String apiUrl) async{
+  final client = http.Client();
+  try {
+    final response = await client.delete(
+      Uri.parse(baseUrl+apiUrl),
+      // headers: {
+      //   'Authorization': 'Bearer $authToken', // Add the token to the header
+      // },
+      
+    ).timeout(const Duration(seconds: 30));
+    if (response.statusCode >= 200 && response.statusCode < 300){
+      // Successful response, handle the data
+      print('Response: ${response.body}');
+    }
+    else{
+      // Error response from the server
+      throw ApiException('Server responded with ${response.statusCode}: ${response.reasonPhrase}');
+    }
+
+  } catch (e) {
+    if (e is TimeoutException) {
+      // Request timeout
+      throw ApiException('Request timed out');
+    } else if (e is http.ClientException) {
+      // Network error or request cancellation
+      throw ApiException('$e');
+    } else {
+      // Other unhandled exceptions
+      throw ApiException('$e');
+    }
+  } finally {
+    client.close();
+  }
+
+}
