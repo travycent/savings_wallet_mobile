@@ -24,7 +24,7 @@ class ApiException implements Exception{
   String toString() => 'ApiException: $message';
 }
 // Fetch Data API Function
-Future<void> fetchData(String apiUrl) async{
+Future<String> fetchData(String apiUrl) async{
   final client = http.Client();
   try {
     final response = await client.get(
@@ -35,7 +35,7 @@ Future<void> fetchData(String apiUrl) async{
     ).timeout(const Duration(seconds: 20));
     if (response.statusCode >= 200 && response.statusCode < 300){
       // Successful response, handle the data
-      print('Response: ${response.body}');
+      return response.body;
     }
     else{
       // Error response from the server

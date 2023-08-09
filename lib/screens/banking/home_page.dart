@@ -1,5 +1,6 @@
 //This is the home screen of the application
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/providers/api_client.dart';
 import 'package:nssf_e_wallet/partials/bottom_navigation_handler.dart';
 import 'package:nssf_e_wallet/screens/banking/withdraw_page.dart';
 import 'package:nssf_e_wallet/screens/banking/add_deposit_page.dart';
