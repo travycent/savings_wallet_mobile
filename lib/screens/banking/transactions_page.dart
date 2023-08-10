@@ -4,6 +4,7 @@ import 'package:nssf_e_wallet/models/transactions_model.dart';
 import 'package:nssf_e_wallet/partials/bottom_navigation_handler.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:nssf_e_wallet/core/functions.dart';
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({ Key? key }) : super(key: key);
 
@@ -24,16 +25,10 @@ class _TransactionsPageState extends State<TransactionsPage> {
       setState(() {
         cardData = customerTransactions.data ?? []; // Update the list with parsed data
       });
-      // // print(customerTransactionsData);
-      // print('Printing customerTransactionsData:');
-      // for (SingleCustomerTransactionData transaction in customerTransactionsData) {
-      //   print('Transaction ID: ${transaction.transactionId}');
-      //   print('Transaction Amount: ${transaction.transactionAmount}');
-      //   print('User Email: ${transaction.userEmail}');
-      //   // Print other properties as needed
-      // }
+
     } catch (e) {
       print('Error fetching or parsing data: $e');
+      showToast('$e');
     }
   }
   @override
