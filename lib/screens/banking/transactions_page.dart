@@ -15,7 +15,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
   final String? title = "Transactions";
   int _currentIndex = 0;
   List<SingleCustomerTransactionData> cardData =[];
-   Future<void> getCustomerTransactions() async {
+  Future<void> getCustomerTransactions() async {
     try {
       String data = await fetchData("customer-transactions/centtravy@gmail.com/");
       print('API Response: $data'); // Print the API response to the console
@@ -27,7 +27,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
       });
 
     } catch (e) {
-      print('Error fetching or parsing data: $e');
+      // print('Error fetching or parsing data: $e');
       showToast('$e');
     }
   }

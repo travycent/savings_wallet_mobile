@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/providers/api_client.dart';
+import 'package:nssf_e_wallet/models/transactions_model.dart';
+import 'dart:convert';
+import 'package:nssf_e_wallet/core/functions.dart';
 class DepositPage extends StatefulWidget {
   const DepositPage({ Key? key }) : super(key: key);
 
@@ -8,7 +12,14 @@ class DepositPage extends StatefulWidget {
 
 class _DepositPageState extends State<DepositPage> {
   final String? title="Deposit";
+  List<TransactionTypesData> transactionTypesData =[];
   final TextEditingController _amountTextFieldController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    geTransactionsTypes();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,5 +70,23 @@ class _DepositPageState extends State<DepositPage> {
       ),
 
     );
+  }
+  
+  Future<void> geTransactionsTypes() async {
+    try {
+      String data = await fetchData("transaction-types/");
+      print('API Response: $data'); // Print the API response to the console
+      TransactionTypes transactionTypes = TransactionTypes.fromJson(jsonDecode(data));
+      print('Parsed Transactions Types: $transactionTypes'); // Print the parsed object
+
+      setState(() {
+        transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
+      });
+      getTransactionTypeId("Send",transactionTypesData);
+
+    } catch (e) {
+      print('Error fetching or parsing data: $e');
+      showToast('$e');
+    }
   }
 }
