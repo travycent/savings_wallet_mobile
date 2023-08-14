@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nssf_e_wallet/providers/api_client.dart';
 import 'package:nssf_e_wallet/models/transactions_model.dart';
+import 'dart:convert';
 void showToast(String text)
 {
   Fluttertoast.showToast(
@@ -36,3 +38,35 @@ int getTransactionTypeId(String value, List<TransactionTypesData> transactionTyp
   // Return the transaction type ID
   return transactionTypeId;
 }
+// Function to handle Transactions
+Future<bool> addTransaction(double amount, int transactionTypeId) async
+{
+  try {
+    Map<String, dynamic> postDataPayload = {
+      "transaction_amount": amount,
+      "transaction_type_name": transactionTypeId,
+      "payee" : "",
+      // Add other data key-value pairs as needed
+    };
+      await postData("create-customer-transaction/centtravy@gmail.com/",postDataPayload);
+      return true;
+  } catch (e) {
+    showToast('$e');
+    return false;
+  }
+}
+// Function to get Transactions
+Future<TransactionTypes> geTransactionsTypes() async {
+      try {
+      String data = await fetchData("transaction-types/");
+      // print('API Response: $data'); // Print the API response to the console
+      TransactionTypes transactionTypes = TransactionTypes.fromJson(jsonDecode(data));
+      return transactionTypes;
+
+    } catch (e) {
+      // print('Error fetching or parsing data: $e');
+      showToast('$e');
+      rethrow;
+    }
+}
+

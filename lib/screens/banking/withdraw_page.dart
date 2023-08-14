@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/providers/api_client.dart';
+import 'package:nssf_e_wallet/models/transactions_model.dart';
+import 'dart:convert';
+import 'package:nssf_e_wallet/core/functions.dart';
 class WithdrawPage extends StatefulWidget {
   const WithdrawPage({ Key? key }) : super(key: key);
 
@@ -8,8 +12,14 @@ class WithdrawPage extends StatefulWidget {
 
 class _WithdrawPageState extends State<WithdrawPage> {
   final String? title="Withdaw";
+  List<TransactionTypesData> transactionTypesData =[];
+  int? transactionTypeId;
   final TextEditingController _amountTextFieldController = TextEditingController();
-
+  @override
+  void initState(){
+    super.initState();
+    initializeData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +60,17 @@ class _WithdrawPageState extends State<WithdrawPage> {
                 // Use percentages to set the minimum size
                 minimumSize:const Size(100.0, 10.0) / 100.0 * MediaQuery.of(context).size.width,
               ),
-              onPressed: (){
-              // Todo
+              onPressed: () async{
+                // Todo
+                double? amount = double.tryParse(_amountTextFieldController.text.toString());
+                amount = amount ?? 0.0;
+
+                bool result=await addTransaction(amount, transactionTypeId!);
+                if(result)
+                {
+                  _amountTextFieldController.clear();
+                  showToast('Transaction Completed Successfully');
+                }
               },
             ),
           ),
@@ -59,5 +78,16 @@ class _WithdrawPageState extends State<WithdrawPage> {
       ),
 
     );
+  }
+  // Function Used to Intialize any data needed on the Screen
+  Future<void> initializeData() async {
+    TransactionTypes transactionTypes= await geTransactionsTypes();
+    setState(() {
+        transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
+    });
+    int returnId=getTransactionTypeId("Withdraw",transactionTypesData);
+      setState(() {
+        transactionTypeId = returnId; // Update the list with parsed data
+      });
   }
 }

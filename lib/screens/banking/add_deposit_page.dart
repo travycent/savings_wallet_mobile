@@ -63,12 +63,17 @@ class _DepositPageState extends State<DepositPage> {
                 // Use percentages to set the minimum size
                 minimumSize:const Size(100.0, 10.0) / 100.0 * MediaQuery.of(context).size.width,
               ),
-              onPressed: (){
-              // Todo
-              double? amount = double.tryParse(_amountTextFieldController.text.toString());
-              amount = amount ?? 0.0;
+              onPressed: () async{
+                // Todo
+                double? amount = double.tryParse(_amountTextFieldController.text.toString());
+                amount = amount ?? 0.0;
 
-              addTransaction(amount, transactionTypeId!);
+                bool result=await addTransaction(amount, transactionTypeId!);
+                if(result)
+                {
+                  _amountTextFieldController.clear();
+                  showToast('Transaction Completed Successfully');
+                }
 
               },
             ),
@@ -89,28 +94,13 @@ class _DepositPageState extends State<DepositPage> {
       setState(() {
         transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
       });
-      int returnId=getTransactionTypeId("Send",transactionTypesData);
+      int returnId=getTransactionTypeId("Deposit",transactionTypesData);
       setState(() {
         transactionTypeId = returnId; // Update the list with parsed data
       });
 
     } catch (e) {
       // print('Error fetching or parsing data: $e');
-      showToast('$e');
-    }
-  }
-  void addTransaction(double amount, int transactionTypeId) async
-  {
-    try {
-      Map<String, dynamic> postDataPayload = {
-        "transaction_amount": amount,
-        "transaction_type_name": transactionTypeId,
-        "payee" : "",
-        // Add other data key-value pairs as needed
-      };
-       await postData("create-customer-transaction/centtravy@gmail.com/",postDataPayload);
-       showToast('Transaction Created Successfully');
-    } catch (e) {
       showToast('$e');
     }
   }
