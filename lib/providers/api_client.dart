@@ -58,22 +58,25 @@ Future<String> fetchData(String apiUrl) async{
   }
 }
 // Post Data API Function
-Future<void> postData(String apiUrl,Map<String, dynamic> data) async{
+Future<String> postData(String apiUrl,Map<String, dynamic> data) async{
   final client = http.Client();
   try {
     final response = await client.post(
       Uri.parse(baseUrl+apiUrl),
-      // headers: {
+       headers: {
+        'Content-Type': 'application/json',
       //   'Authorization': 'Bearer $authToken', // Add the token to the header
-      // },
+      },
       body: jsonEncode(data),
     ).timeout(const Duration(seconds: 30));
     if (response.statusCode >= 200 && response.statusCode < 300){
       // Successful response, handle the data
-      print('Response: ${response.body}');
+      // print('Response: ${response.body}');
+      return response.body;
     }
     else{
       // Error response from the server
+      // final errorMessage = response.body;
       throw ApiException('Server responded with ${response.statusCode}: ${response.reasonPhrase}');
     }
 

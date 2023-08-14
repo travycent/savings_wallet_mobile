@@ -13,6 +13,7 @@ class DepositPage extends StatefulWidget {
 class _DepositPageState extends State<DepositPage> {
   final String? title="Deposit";
   List<TransactionTypesData> transactionTypesData =[];
+  int? transactionTypeId;
   final TextEditingController _amountTextFieldController = TextEditingController();
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _DepositPageState extends State<DepositPage> {
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                         ),
+                        
                       ),
                     ),
                     const SizedBox(height: 2.0),
@@ -63,6 +65,11 @@ class _DepositPageState extends State<DepositPage> {
               ),
               onPressed: (){
               // Todo
+              double? amount = double.tryParse(_amountTextFieldController.text.toString());
+              amount = amount ?? 0.0;
+
+              addTransaction(amount, transactionTypeId!);
+
               },
             ),
           ),
@@ -75,17 +82,35 @@ class _DepositPageState extends State<DepositPage> {
   Future<void> geTransactionsTypes() async {
     try {
       String data = await fetchData("transaction-types/");
-      print('API Response: $data'); // Print the API response to the console
+      // print('API Response: $data'); // Print the API response to the console
       TransactionTypes transactionTypes = TransactionTypes.fromJson(jsonDecode(data));
-      print('Parsed Transactions Types: $transactionTypes'); // Print the parsed object
+      // print('Parsed Transactions Types: $transactionTypes'); // Print the parsed object
 
       setState(() {
         transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
       });
-      getTransactionTypeId("Send",transactionTypesData);
+      int returnId=getTransactionTypeId("Send",transactionTypesData);
+      setState(() {
+        transactionTypeId = returnId; // Update the list with parsed data
+      });
 
     } catch (e) {
-      print('Error fetching or parsing data: $e');
+      // print('Error fetching or parsing data: $e');
+      showToast('$e');
+    }
+  }
+  void addTransaction(double amount, int transactionTypeId) async
+  {
+    try {
+      Map<String, dynamic> postDataPayload = {
+        "transaction_amount": amount,
+        "transaction_type_name": transactionTypeId,
+        "payee" : "",
+        // Add other data key-value pairs as needed
+      };
+       await postData("create-customer-transaction/centtravy@gmail.com/",postDataPayload);
+       showToast('Transaction Created Successfully');
+    } catch (e) {
       showToast('$e');
     }
   }

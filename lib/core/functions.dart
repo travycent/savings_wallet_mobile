@@ -28,7 +28,9 @@ int getTransactionTypeId(String value, List<TransactionTypesData> transactionTyp
 
   // Print a message if the value is not found in the list
   if (transactionTypeId == -1) {
-    print("$value not found in the list");
+    // Throw an Exception of not found
+    throw  Exception("There is no valid $value. Please contact the Admin");
+    // print("$value not found in the list");
   }
 
   // Return the transaction type ID
