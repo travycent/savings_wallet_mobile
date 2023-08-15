@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        automaticallyImplyLeading: false,// Remove the back button icon
       ),
       body: SingleChildScrollView(
         child: Center(

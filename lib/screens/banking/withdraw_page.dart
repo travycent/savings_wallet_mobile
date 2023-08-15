@@ -64,8 +64,9 @@ class _WithdrawPageState extends State<WithdrawPage> {
                 // Todo
                 double? amount = double.tryParse(_amountTextFieldController.text.toString());
                 amount = amount ?? 0.0;
+                String payee = "";
 
-                bool result=await addTransaction(amount, transactionTypeId!);
+                bool result=await addTransaction(amount, transactionTypeId!,payee);
                 if(result)
                 {
                   _amountTextFieldController.clear();

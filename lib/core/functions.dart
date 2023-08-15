@@ -39,13 +39,13 @@ int getTransactionTypeId(String value, List<TransactionTypesData> transactionTyp
   return transactionTypeId;
 }
 // Function to handle Transactions
-Future<bool> addTransaction(double amount, int transactionTypeId) async
+Future<bool> addTransaction(double amount, int transactionTypeId,String payee) async
 {
   try {
     Map<String, dynamic> postDataPayload = {
       "transaction_amount": amount,
       "transaction_type_name": transactionTypeId,
-      "payee" : "",
+      "payee" : payee,
       // Add other data key-value pairs as needed
     };
       await postData("create-customer-transaction/centtravy@gmail.com/",postDataPayload);
@@ -68,5 +68,18 @@ Future<TransactionTypes> geTransactionsTypes() async {
       showToast('$e');
       rethrow;
     }
+}
+// Function check existing user
+Future<bool> checkUserExists(String email)async{
+  if(email == null){
+    throw Exception("Recepient cannot be null"); 
+  }
+  else
+  {
+    return true;
+  }
+
+  
+
 }
 

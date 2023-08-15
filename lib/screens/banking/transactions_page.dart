@@ -37,36 +37,12 @@ class _TransactionsPageState extends State<TransactionsPage> {
     getCustomerTransactions();
   }
 
-  // Sample data for dynamic text
-  // List<Map<String, String>> cardData = [
-  //       {
-  //     "avatarText": "A",
-  //     "title": "Transaction Title 1",
-  //     "date": "Transaction Date 1",
-  //   },
-  //   {
-  //     "avatarText": "B",
-  //     "title": "Transaction Title 2",
-  //     "date": "Transaction Date 2",
-  //   },
-  //   {
-  //     "avatarText": "C",
-  //     "title": "Transaction Title 3",
-  //     "date": "Transaction Date 3",
-  //   },
-  //   {
-  //     "avatarText": "C",
-  //     "title": "Transaction Title 4",
-  //     "date": "Transaction Date 4",
-  //   },
-
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(title!),
+        automaticallyImplyLeading: false,// Remove the back button icon
       ),
       body: ListView.builder(
         itemCount: cardData.isNotEmpty ? cardData.length : 1,
