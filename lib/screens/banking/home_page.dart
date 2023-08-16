@@ -1,6 +1,9 @@
 //This is the home screen of the application
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/models/wallet_model.dart';
 import 'package:nssf_e_wallet/providers/api_client.dart';
+import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:nssf_e_wallet/partials/bottom_navigation_handler.dart';
 import 'package:nssf_e_wallet/screens/banking/withdraw_page.dart';
 import 'package:nssf_e_wallet/screens/banking/add_deposit_page.dart';
@@ -9,6 +12,7 @@ import 'package:nssf_e_wallet/screens/banking/paybill_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_target_page.dart';
 import 'package:nssf_e_wallet/screens/banking/add_savings_preferences_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_preferences_page.dart';
+import 'package:nssf_e_wallet/core/functions.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -21,10 +25,15 @@ class _HomePageState extends State<HomePage> {
   final double gridHeightValue = 60;
   final double gridWidthValue = 150;
   int _currentIndex = 1;
-  double? activeWalletBalance = 1000000;
-  double? savingWalletBalance = 1000000;
-
-
+  String? activeWalletBalance = "0";
+  String? savingWalletBalance = "0";
+  List<CustomerWalletData> customerWalletData =[];
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the Customer Wallet balance
+    getCustomerWallets();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,6 +204,36 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+  // Function used to return wallet balance
+  Future<void> getCustomerWallets() async {
+  try {
+    String data = await fetchData("customer-wallet/centtravy@gmail.com/");
+    // print('API Response: $data'); // Print the API response to the console
+    CustomerWallet customerWallet = CustomerWallet.fromJson(jsonDecode(data));
+
+    setState(() {
+      customerWalletData = customerWallet.data ?? []; // Update the list with parsed data
+    });
+    if (customerWalletData != null && customerWalletData.isNotEmpty) {
+      setState(() {
+
+        activeWalletBalance = NumberFormat.currency(
+            locale: 'en_UG', // Use the appropriate locale for UGX
+            symbol: 'UGX ',   // Set the currency symbol to UGX
+          ).format(customerWalletData[0].activeWalletBalance ?? 0.0);
+        savingWalletBalance = NumberFormat.currency(
+            locale: 'en_UG', // Use the appropriate locale for UGX
+            symbol: 'UGX ',   // Set the currency symbol to UGX
+          ).format(customerWalletData[0].savingWalletBalance ?? 0.0);
+      });
+    }
+
+
+  } catch (e) {
+    // print('Error fetching or parsing data: $e');
+    showToast('$e');
+  }
   }
 }
 

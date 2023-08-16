@@ -18,9 +18,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
   Future<void> getCustomerTransactions() async {
     try {
       String data = await fetchData("customer-transactions/centtravy@gmail.com/");
-      print('API Response: $data'); // Print the API response to the console
+      // print('API Response: $data'); // Print the API response to the console
       CustomerTransactions customerTransactions = CustomerTransactions.fromJson(jsonDecode(data));
-      print('Parsed CustomerTransactions: $customerTransactions'); // Print the parsed object
+      // print('Parsed CustomerTransactions: $customerTransactions'); // Print the parsed object
 
       setState(() {
         cardData = customerTransactions.data ?? []; // Update the list with parsed data
@@ -62,7 +62,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
             // Format the transactionAmount as UGX currency string
           String formattedAmount = NumberFormat.currency(
             locale: 'en_UG', // Use the appropriate locale for UGX
-            symbol: 'UGX',   // Set the currency symbol to UGX
+            symbol: 'UGX ',   // Set the currency symbol to UGX
           ).format(cardData[index].transactionAmount);
             return Container(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
