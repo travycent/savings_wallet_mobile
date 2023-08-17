@@ -31,8 +31,8 @@ class SavingsPreferencesData {
   int? savingPreferenceId;
   String? userEmail;
   String? transactionType;
-  int? percentageValue;
-  int? frequencyValue;
+  double? percentageValue;
+  double? frequencyValue;
   String? savingsPreferenceStartDate;
   String? savingsPreferenceEndDate;
   String? preferenceUpdateDate;

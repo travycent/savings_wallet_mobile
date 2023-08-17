@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nssf_e_wallet/providers/api_client.dart';
+import 'package:nssf_e_wallet/models/savings_preferences_model.dart';
+import 'dart:convert';
+import 'package:nssf_e_wallet/core/functions.dart';
+import 'package:intl/intl.dart';
+
 class SavingsPreferencesPage extends StatefulWidget {
   const SavingsPreferencesPage({ Key? key }) : super(key: key);
 
@@ -7,60 +13,13 @@ class SavingsPreferencesPage extends StatefulWidget {
 }
 class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
   final String? title = "Saving Preferences";
+  List<SavingsPreferencesData> cardData =[];
 
-  // Sample data for dynamic text
-  List<Map<String, String>> cardData = [
-        {
-      "avatarText": "A",
-      "title": "Frequency 1",
-      "date": "Transaction Date 1",
-    },
-    {
-      "avatarText": "B",
-      "title": "Frequency 2",
-      "date": "Transaction Date 2",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 3",
-      "date": "Transaction Date 3",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-    {
-      "avatarText": "C",
-      "title": "Transaction Title 4",
-      "date": "Transaction Date 4",
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    getCustomerSavingPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +35,15 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
               child: Text("No data found"),
             );
           } else {
+            //Extract the First Letter for the Avatar
+            String avatarText = cardData[index].transactionType?.substring(0, 1) ?? "";
+            String transactionType=cardData[index].transactionType ?? "";
+            // Convert the input datetime string to a DateTime object
+            DateTime dateTime = DateTime.parse(cardData[index].savingsPreferenceEndDate!);
+            String formattedDatetime = DateFormat('yyyy/MM/dd').format(dateTime);
+            String freq = cardData[index].frequencyValue.toString() ?? "0";
+            String percentage = cardData[index].percentageValue.toString() ?? "0";
+            
             return Container(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               height: 100,
@@ -92,7 +60,7 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
                           radius: 30,
                           backgroundColor: Colors.amber,
                           child: Text(
-                            cardData[index]["avatarText"]!,
+                            avatarText,
                             style: const TextStyle(fontSize: 24, color: Colors.white),
                           ),
                         ),
@@ -103,11 +71,15 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            cardData[index]["title"]!,
+                            transactionType,
                             style: const TextStyle(fontSize: 18),
                           ),
                           Text(
-                            cardData[index]["date"]!,
+                            "freq:"+freq + ": %age:" + percentage,
+                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                          Text(
+                            formattedDatetime,
                             style: const TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                         ],
@@ -137,5 +109,22 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
       ),
     );
   }
+  // Get customer savings preferences
+  Future<void> getCustomerSavingPreferences() async {
+  try {
+    String data = await fetchData("get-customer-saving-preferences/centtravy@gmail.com/");
+    // print('API Response: $data'); // Print the API response to the console
+    SavingsPreferencesModel savingsPreferencesModel = SavingsPreferencesModel.fromJson(jsonDecode(data));
+    // print('Parsed CustomerTransactions: $customerTransactions'); // Print the parsed object
+
+    setState(() {
+      cardData = savingsPreferencesModel.data ?? []; // Update the list with parsed data
+    });
+
+  } catch (e) {
+    // print('Error fetching or parsing data: $e');
+    showToast('$e');
+  }
+}
 }
 
