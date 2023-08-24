@@ -88,7 +88,7 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
                         child: GestureDetector(
                           onTap: () {
                             // Handle the click on the chevron icon
-                            print("Chevron Icon Clicked for Card $index");
+                            // print("Chevron Icon Clicked for Card $index");
                           },
                           child: const Align(
                             alignment: Alignment.centerRight,
