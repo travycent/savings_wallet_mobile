@@ -82,13 +82,22 @@ class _WithdrawPageState extends State<WithdrawPage> {
   }
   // Function Used to Intialize any data needed on the Screen
   Future<void> initializeData() async {
-    TransactionTypes transactionTypes= await geTransactionsTypes();
-    setState(() {
-        transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
-    });
-    int returnId=getTransactionTypeId("Withdraw",transactionTypesData);
-      setState(() {
-        transactionTypeId = returnId; // Update the list with parsed data
+    try
+    {
+      TransactionTypes transactionTypes= await geTransactionsTypes();
+        setState(() {
+          transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
       });
+      int returnId=getTransactionTypeId("Withdraw",transactionTypesData);
+        setState(() {
+          transactionTypeId = returnId; // Update the list with parsed data
+        });
+    }
+    catch (e) {
+      // print('Error fetching or parsing data: $e');
+      showToast('$e');
+
+    }
+
   }
 }

@@ -65,7 +65,7 @@ Future<TransactionTypes> geTransactionsTypes() async {
 
     } catch (e) {
       // print('Error fetching or parsing data: $e');
-      showToast('$e');
+      //showToast('$e');
       rethrow;
     }
 }

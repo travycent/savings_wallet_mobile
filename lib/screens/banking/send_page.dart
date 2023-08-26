@@ -94,13 +94,19 @@ class _SendPageState extends State<SendPage> {
   }
   // Function Used to Intialize any data needed on the Screen
   Future<void> initializeData() async {
-    TransactionTypes transactionTypes= await geTransactionsTypes();
-    setState(() {
-        transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
-    });
-    int returnId=getTransactionTypeId("Send",transactionTypesData);
+    try
+    {
+      TransactionTypes transactionTypes= await geTransactionsTypes();
       setState(() {
-        transactionTypeId = returnId; // Update the list with parsed data
+          transactionTypesData = transactionTypes.data ?? []; // Update the list with parsed data
       });
+      int returnId=getTransactionTypeId("Send",transactionTypesData);
+        setState(() {
+          transactionTypeId = returnId; // Update the list with parsed data
+        });
+    }
+    catch (e) {
+      showToast('$e');
+    }
   }
 }
