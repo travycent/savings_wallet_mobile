@@ -130,5 +130,44 @@ Future<void> deleteData(String apiUrl) async{
   } finally {
     client.close();
   }
+  
+
+}
+// Post Data API Function
+Future<String> authUser(String apiUrl,Map<String, dynamic> data) async{
+  final client = http.Client();
+  try {
+    final response = await client.post(
+      Uri.parse(baseUrl+apiUrl),
+       headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(data),
+    ).timeout(const Duration(seconds: 30));
+    if (response.statusCode >= 200 && response.statusCode < 300){
+      // Successful response, handle the data
+      // print('Response: ${response.body}');
+      return response.body;
+    }
+    else{
+      // Error response from the server
+      final errorMessage = json.decode(response.body)['message'];
+      throw Exception('Server responded with ${response.statusCode}: $errorMessage');
+    }
+
+  } catch (e) {
+    if (e is TimeoutException) {
+      // Request timeout
+      throw ApiException('Request timed out');
+    } else if (e is http.ClientException) {
+      // Network error or request cancellation
+      throw ApiException('$e');
+    } else {
+      // Other unhandled exceptions
+      throw ApiException('$e');
+    }
+  } finally {
+    client.close();
+  }
 
 }

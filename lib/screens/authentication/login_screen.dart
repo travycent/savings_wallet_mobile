@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:nssf_e_wallet/screens/authentication/forgot_password_screen.dart';
 import 'package:nssf_e_wallet/screens/banking/home_page.dart';
+import 'package:nssf_e_wallet/core/authentication.dart';
+import 'package:nssf_e_wallet/core/functions.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
 
@@ -75,17 +77,25 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 2.0),
                   ElevatedButton(
-                      onPressed: (){
-                        bool _isAuthenticated=true;
-                        //Handle Login Logic here
-                        if(_isAuthenticated)
-                        {
-                          //Switch to Home Sceen
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const HomePage()),
-                          );
+                      onPressed: () async{
+                        bool _isAuthenticated=false;
+                        try{
+                          //login user 
+                          _isAuthenticated = await login("email",_usernameTextFieldController.text.toString() , _passwordTextFieldController.text.toString());
+                          // Handle Login Logic here
+                          if(_isAuthenticated)
+                          {
+                            //Switch to Home Sceen
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const HomePage()),
+                            );
+                          }
+                        }catch (e) {
+                          showToast('$e');
                         }
+
+                        
                       },
                       child: const Text("Login"),
                       style: ElevatedButton.styleFrom(
