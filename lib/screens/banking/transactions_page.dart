@@ -15,19 +15,33 @@ class _TransactionsPageState extends State<TransactionsPage> {
   final String? title = "Transactions";
   int _currentIndex = 0;
   List<SingleCustomerTransactionData> cardData =[];
+  bool _loading = false;
+     // Callback function to update the loading state
+  void setLoading(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
+  } 
   Future<void> getCustomerTransactions() async {
     try {
+      //display loading
+      setLoading(true);
       String data = await fetchData("customer-transactions/centtravy@gmail.com/");
       // print('API Response: $data'); // Print the API response to the console
+      
       CustomerTransactions customerTransactions = CustomerTransactions.fromJson(jsonDecode(data));
       // print('Parsed CustomerTransactions: $customerTransactions'); // Print the parsed object
 
       setState(() {
         cardData = customerTransactions.data ?? []; // Update the list with parsed data
       });
+      //disable loading
+      setLoading(false);
 
     } catch (e) {
       // print('Error fetching or parsing data: $e');
+      //disable loading
+      setLoading(false);
       showToast('$e');
     }
   }

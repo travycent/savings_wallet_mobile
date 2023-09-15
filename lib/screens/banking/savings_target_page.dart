@@ -12,6 +12,13 @@ class _SavingsTargetPageState extends State<SavingsTargetPage> {
   final TextEditingController _amountTextFieldController = TextEditingController();
   final TextEditingController _startDateTextFieldController = TextEditingController();
   final TextEditingController _endDateTextFieldController = TextEditingController();
+  bool _loading = false;
+     // Callback function to update the loading state
+  void setLoading(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,6 +104,10 @@ class _SavingsTargetPageState extends State<SavingsTargetPage> {
                       },
                     ),
                     const SizedBox(height: 2.0),
+                    if (_loading)
+                      const Center(
+                        child: CircularProgressIndicator(), // Center the circular progress indicator
+                      ),
                   ],
                 ),
               ),
@@ -111,6 +122,8 @@ class _SavingsTargetPageState extends State<SavingsTargetPage> {
                 minimumSize:const Size(100.0, 10.0) / 100.0 * MediaQuery.of(context).size.width,
               ),
               onPressed: (){
+                //display loading
+                setLoading(true);
               // Todo
               },
             ),

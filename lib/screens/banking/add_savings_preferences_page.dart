@@ -6,10 +6,17 @@ class AddSavingsPreferencePage extends StatefulWidget {
   State<AddSavingsPreferencePage> createState() => _AddSavingsPreferencePageState();
 }
 class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
-    final String? title="Add Savings Preference";
+  final String? title="Add Savings Preference";
   String? _selectedTransaction;
   String? _selectedFrequency;
   String? _selectedPercentage;
+  bool _loading = false;
+     // Callback function to update the loading state
+  void setLoading(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
+  }
     // Sample data for dynamic text
   List<String>? _transactionTypesItems = ["Option 1", "Option 2", "Option 3"];
   List<String>? _selectedFrequeciesItems = ["Choice A", "Choice B", "Choice C"];
