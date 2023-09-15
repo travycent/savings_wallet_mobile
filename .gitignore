@@ -1,5 +1,7 @@
 # .env ignore
 *.env
+.env.development
+.env.production
 # Miscellaneous
 *.class
 *.log
