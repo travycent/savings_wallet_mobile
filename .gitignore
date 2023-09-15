@@ -1,5 +1,5 @@
 # .env ignore
-.env
+*.env
 # Miscellaneous
 *.class
 *.log
