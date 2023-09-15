@@ -58,87 +58,95 @@ class _TransactionsPageState extends State<TransactionsPage> {
         title: Text(title!),
         automaticallyImplyLeading: false,// Remove the back button icon
       ),
-      body: ListView.builder(
-        itemCount: cardData.isNotEmpty ? cardData.length : 1,
-        itemBuilder: (context, index) {
-          if (cardData.isEmpty) {
-            return const Center(
-              child: Text("No data found"),
-            );
-          } else {
-            // Convert the input datetime string to a DateTime object
-            DateTime dateTime = DateTime.parse(cardData[index].transactionDate!);
-            // Format the DateTime object using DateFormat from intl package
-            String formattedDatetime = DateFormat('yyyy/MM/dd, hh:mm a').format(dateTime);
-            //Extract the First Letter for the Avatar
-            String avatarText = cardData[index].transactionType?.substring(0, 1) ?? "";
-            
-            // Format the transactionAmount as UGX currency string
-          String formattedAmount = NumberFormat.currency(
-            locale: 'en_UG', // Use the appropriate locale for UGX
-            symbol: 'UGX ',   // Set the currency symbol to UGX
-          ).format(cardData[index].transactionAmount);
-            return Container(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              height: 100,
-              width: double.maxFinite,
-              child: Card(
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 2.0),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.amber,
-                          child: Text(
-                            avatarText,
-                            // cardData[index].transactionType?? "Unknown",
-                            style: const TextStyle(fontSize: 24, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: [
+          ListView.builder(
+            itemCount: cardData.isNotEmpty ? cardData.length : 1,
+            itemBuilder: (context, index) {
+              if (cardData.isEmpty) {
+                return const Center(
+                  child: Text("No data found"),
+                );
+              } else {
+                // Convert the input datetime string to a DateTime object
+                DateTime dateTime = DateTime.parse(cardData[index].transactionDate!);
+                // Format the DateTime object using DateFormat from intl package
+                String formattedDatetime = DateFormat('yyyy/MM/dd, hh:mm a').format(dateTime);
+                //Extract the First Letter for the Avatar
+                String avatarText = cardData[index].transactionType?.substring(0, 1) ?? "";
+                
+                // Format the transactionAmount as UGX currency string
+              String formattedAmount = NumberFormat.currency(
+                locale: 'en_UG', // Use the appropriate locale for UGX
+                symbol: 'UGX ',   // Set the currency symbol to UGX
+              ).format(cardData[index].transactionAmount);
+                return Container(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  height: 100,
+                  width: double.maxFinite,
+                  child: Card(
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
                         children: <Widget>[
-                          Text(
-                            formattedAmount,
-                            //cardData[index].transactionAmount.toString(),
-                            style: const TextStyle(fontSize: 18),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 2.0),
+                            child: CircleAvatar(
+                              radius: 30,
+                              backgroundColor: Colors.amber,
+                              child: Text(
+                                avatarText,
+                                // cardData[index].transactionType?? "Unknown",
+                                style: const TextStyle(fontSize: 24, color: Colors.white),
+                              ),
+                            ),
                           ),
-                          Text(
-                            // cardData[index].transactionDate!,
-                            formattedDatetime,
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                formattedAmount,
+                                //cardData[index].transactionAmount.toString(),
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                // cardData[index].transactionDate!,
+                                formattedDatetime,
+                                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Handle the click on the chevron icon
+                                print("Chevron Icon Clicked for Card $index");
+                              },
+                              child: const Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(
+                                  Icons.chevron_right,
+                                  size: 50,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Handle the click on the chevron icon
-                            print("Chevron Icon Clicked for Card $index");
-                          },
-                          child: const Align(
-                            alignment: Alignment.centerRight,
-                            child: Icon(
-                              Icons.chevron_right,
-                              size: 50,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          }
-        },
+                );
+              }
+            },
+          ),
+          if (_loading)
+            const Center(
+              child: CircularProgressIndicator(), // Show circular progress indicator when loading
+            ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationHandler(
         currentIndex: _currentIndex,
