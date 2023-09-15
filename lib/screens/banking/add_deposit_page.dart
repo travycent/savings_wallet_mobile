@@ -15,6 +15,13 @@ class _DepositPageState extends State<DepositPage> {
   List<TransactionTypesData> transactionTypesData =[];
   int? transactionTypeId;
   final TextEditingController _amountTextFieldController = TextEditingController();
+  bool _loading = false;
+     // Callback function to update the loading state
+  void setLoading(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -50,6 +57,10 @@ class _DepositPageState extends State<DepositPage> {
                       ),
                     ),
                     const SizedBox(height: 2.0),
+                    if (_loading)
+                      const Center(
+                        child: CircularProgressIndicator(), // Center the circular progress indicator
+                      ),
                   ],
                 ),
               ),
@@ -64,12 +75,16 @@ class _DepositPageState extends State<DepositPage> {
                 minimumSize:const Size(100.0, 10.0) / 100.0 * MediaQuery.of(context).size.width,
               ),
               onPressed: () async{
+                //display loading
+                setLoading(true);
                 // Todo
                 double? amount = double.tryParse(_amountTextFieldController.text.toString());
                 amount = amount ?? 0.0;
                 String payee = "";
 
                 bool result=await addTransaction(amount, transactionTypeId!,payee);
+                //display loading
+                setLoading(false);
                 if(result)
                 {
                   _amountTextFieldController.clear();
