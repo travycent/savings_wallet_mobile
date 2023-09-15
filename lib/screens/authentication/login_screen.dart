@@ -16,6 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   final String? title="Sign In";
   final TextEditingController _usernameTextFieldController = TextEditingController();
   final TextEditingController _passwordTextFieldController = TextEditingController();
+  bool _loading = false;
+   // Callback function to update the loading state
+  void setLoading(bool loading) {
+    setState(() {
+      _loading = loading;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,12 +83,20 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   const SizedBox(height: 2.0),
+                  if (_loading)
+                      const Center(
+                        child: CircularProgressIndicator(), // Center the circular progress indicator
+                      ),
                   ElevatedButton(
                       onPressed: () async{
                         bool _isAuthenticated=false;
                         try{
+                          //display loading
+                          setLoading(true);
                           //login user 
                           _isAuthenticated = await login("email",_usernameTextFieldController.text.toString() , _passwordTextFieldController.text.toString());
+                          //close loading
+                          setLoading(false);
                           // Handle Login Logic here
                           if(_isAuthenticated)
                           {
@@ -92,6 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           }
                         }catch (e) {
+                          //close loading
+                          setLoading(false);
+                          //Display Error
                           showToast('$e');
                         }
 
