@@ -5,6 +5,7 @@ import 'package:nssf_e_wallet/partials/bottom_navigation_handler.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:nssf_e_wallet/core/functions.dart';
+import 'package:nssf_e_wallet/screens/banking/transaction_detail_page.dart';
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({ Key? key }) : super(key: key);
 
@@ -122,6 +123,10 @@ class _TransactionsPageState extends State<TransactionsPage> {
                           Expanded(
                             child: GestureDetector(
                               onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const TransactionsDetailPage()),
+                                );
                                 // Handle the click on the chevron icon
                                 print("Chevron Icon Clicked for Card $index");
                               },
