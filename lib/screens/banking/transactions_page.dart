@@ -16,8 +16,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
   final String? title = "Transactions";
   int _currentIndex = 0;
   List<SingleCustomerTransactionData> cardData =[];
+  //final SingleCustomerTransactionData transactionData;
   bool _loading = false;
-     // Callback function to update the loading state
+  // Callback function to update the loading state
   void setLoading(bool loading) {
     setState(() {
       _loading = loading;
@@ -125,7 +126,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const TransactionsDetailPage()),
+                                  MaterialPageRoute(builder: (context) =>  TransactionsDetailPage(singleCustomerTransactionData: cardData[index])),
                                 );
                                 // Handle the click on the chevron icon
                                 print("Chevron Icon Clicked for Card $index");
