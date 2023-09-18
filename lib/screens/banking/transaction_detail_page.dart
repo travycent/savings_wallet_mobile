@@ -23,20 +23,25 @@ class TransactionsDetailPage extends StatelessWidget {
                 DateTime dateTime = DateTime.parse(singleCustomerTransactionData.transactionDate!);
                 // Format the DateTime object using DateFormat from intl package
                 String formattedDatetime = DateFormat('yyyy/MM/dd, hh:mm a').format(dateTime);
+                //Extract the type
+                String transactionType = singleCustomerTransactionData.transactionType!;
+                //Extract the Payee
+                String payee = singleCustomerTransactionData.payee ?? '';
+                //(payee ? payee : "-");
                 //Extract the First Letter for the Avatar
                 String avatarText = singleCustomerTransactionData.transactionType?.substring(0, 1) ?? "";
                 // Format the transactionAmount as UGX currency string
                 String formattedAmount = NumberFormat.currency(
                   locale: 'en_UG', // Use the appropriate locale for UGX
-                  symbol: '',   // Set the currency symbol to UGX
+                  symbol: 'UGX ',   // Set the currency symbol to UGX
                 ).format(singleCustomerTransactionData.transactionAmount);
-                String currencySymbol = 'UGX';
+                // String currencySymbol = 'UGX';
                 return Container(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  height: 150,
+                  height: 170,
                   width: double.maxFinite,
                   child: Card(
-                    elevation: 5,
+                    elevation: 3,
                     child: Padding(
                       padding: const EdgeInsets.all(4),
                       child: Row(
@@ -45,16 +50,29 @@ class TransactionsDetailPage extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                formattedAmount,
+                            children: const <Widget>[
+                               Text(
+                                "Amount",
                                 //cardData[index].transactionAmount.toString(),
-                                style: const TextStyle(fontSize: 18),
+                                style:  TextStyle(fontSize: 16, color: Colors.grey),
                               ),
-                              Text(
+                              SizedBox(height: 15),
+                               Text(
                                 // cardData[index].transactionDate!,
-                                formattedDatetime,
-                                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                "Type",
+                                style:  TextStyle(fontSize: 16, color: Colors.grey),
+                              ),
+                              SizedBox(height: 15),
+                               Text(
+                                // cardData[index].transactionDate!,
+                                "Payee",
+                                style:  TextStyle(fontSize: 16, color: Colors.grey),
+                              ),
+                              SizedBox(height: 15),
+                               Text(
+                                // cardData[index].transactionDate!,
+                                "Date",
+                                style:  TextStyle(fontSize: 16, color: Colors.grey),
                               ),
                             ],
                           ),
@@ -64,25 +82,25 @@ class TransactionsDetailPage extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                 formattedAmount,
-                                //cardData[index].transactionAmount.toString(),
-                                style: const TextStyle(fontSize: 18),
+                                style: const TextStyle(fontSize: 16),
                               ),
+                              const SizedBox(height: 15),
                               Text(
-                                // cardData[index].transactionDate!,
+                                transactionType,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
+                                payee,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const SizedBox(height: 15),
+                              Text(
                                 formattedDatetime,
-                                style: const TextStyle(fontSize: 14, color: Colors.grey),
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
-                          //  Expanded(
-                          //   child: Align(
-                          //     alignment: Alignment.centerRight, // Align the Text to center-right
-                          //     child: Text(
-                          //       currencySymbol,
-                          //       style: const TextStyle(fontSize: 18),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),

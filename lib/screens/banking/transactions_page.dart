@@ -128,8 +128,6 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                   context,
                                   MaterialPageRoute(builder: (context) =>  TransactionsDetailPage(singleCustomerTransactionData: cardData[index])),
                                 );
-                                // Handle the click on the chevron icon
-                                print("Chevron Icon Clicked for Card $index");
                               },
                               child: const Align(
                                 alignment: Alignment.centerRight,
