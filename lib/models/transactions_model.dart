@@ -162,7 +162,7 @@ class Frequency {
 
 class FrequencyData {
   int? frequencyId;
-  int? frequency;
+  double? frequency;
   String? createdOn;
 
   FrequencyData({this.frequencyId, this.frequency, this.createdOn});
@@ -213,7 +213,7 @@ class PercentageLimits {
 
 class PercentageLimitsData {
   int? percentageId;
-  int? percentage;
+  double? percentage;
   String? createdOn;
 
   PercentageLimitsData({this.percentageId, this.percentage, this.createdOn});

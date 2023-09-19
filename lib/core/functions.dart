@@ -69,6 +69,34 @@ Future<TransactionTypes> geTransactionsTypes() async {
       rethrow;
     }
 }
+// Function to get Frequencies
+Future<Frequency> getFrequencies() async {
+      try {
+      String data = await fetchData("frequency/");
+      // print('API Response: $data'); // Print the API response to the console
+      Frequency frequencies = Frequency.fromJson(jsonDecode(data));
+      return frequencies;
+
+    } catch (e) {
+      // print('Error fetching or parsing data: $e');
+      //showToast('$e');
+      rethrow;
+    }
+}
+// Function to get percentage limits
+Future<PercentageLimits> getPercentageLimits() async {
+      try {
+      String data = await fetchData("percentage-limits/");
+      //print('API Response: $data'); // Print the API response to the console
+      PercentageLimits percentageLimits = PercentageLimits.fromJson(jsonDecode(data));
+      return percentageLimits;
+
+    } catch (e) {
+      // print('Error fetching or parsing data: $e');
+      //showToast('$e');
+      rethrow;
+    }
+}
 // Function check existing user
 Future<bool> checkUserExists(String email)async{
   if(email == null){
