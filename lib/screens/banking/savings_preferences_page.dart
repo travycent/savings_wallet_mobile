@@ -4,6 +4,7 @@ import 'package:nssf_e_wallet/models/savings_preferences_model.dart';
 import 'dart:convert';
 import 'package:nssf_e_wallet/core/functions.dart';
 import 'package:intl/intl.dart';
+import 'package:nssf_e_wallet/screens/banking/savings_preference_detail.dart';
 
 class SavingsPreferencesPage extends StatefulWidget {
   const SavingsPreferencesPage({ Key? key }) : super(key: key);
@@ -74,10 +75,10 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
                             transactionType,
                             style: const TextStyle(fontSize: 18),
                           ),
-                          Text(
-                            "freq:"+freq + ": %age:" + percentage,
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
+                          // Text(
+                          //   "freq:"+freq + ": %age:" + percentage,
+                          //   style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          // ),
                           Text(
                             formattedDatetime,
                             style: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -87,8 +88,10 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            // Handle the click on the chevron icon
-                            // print("Chevron Icon Clicked for Card $index");
+                            Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>  SavingsPreferenceDetailPage(savingsPreferencesData: cardData[index])),
+                                );
                           },
                           child: const Align(
                             alignment: Alignment.centerRight,
