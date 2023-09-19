@@ -150,7 +150,7 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
                           controller: _startDateTextFieldController,
                           
                           decoration: const InputDecoration(
-                            icon: Icon(Icons.calendar_today),
+                            //icon: Icon(Icons.calendar_today),
                             hintText: "Start Date",
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
@@ -178,7 +178,7 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
                         TextField(
                           controller: _endDateTextFieldController,
                           decoration: const InputDecoration(
-                            icon: Icon(Icons.calendar_today),
+                            //icon: Icon(Icons.calendar_today),
                             hintText: "End Date",
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
@@ -221,15 +221,17 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
                     //display loading
                     setLoading(true);
                     int? transactionTypeId = int.tryParse(_selectedTransaction!);
-                    double? frequency = double.tryParse(_selectedFrequency!);
-                    double? percentage = double.tryParse(_selectedPercentage!);                
-                    bool result=await addSavingsPreference(transactionTypeId!, frequency!, percentage!) ;
+                    int? frequency = int.tryParse(_selectedFrequency!);
+                    int? percentage = int.tryParse(_selectedPercentage!);                
+                    bool result=await addSavingsPreference(transactionTypeId!, frequency!, percentage!,_startDateTextFieldController.text.toString(),_endDateTextFieldController.text.toString()) ;
+                    //bool result = true;
                     //display loading
                     setLoading(false);
                     if(result)
                     {
-                      //_amountTextFieldController.clear();
-                      //_recepientTextFieldController.clear();
+                      print(_selectedTransaction);
+                      _startDateTextFieldController.clear();
+                      _endDateTextFieldController.clear();
                       showToast('Preferences Successfully');
                     }
                   },

@@ -56,13 +56,15 @@ Future<bool> addTransaction(double amount, int transactionTypeId,String payee) a
   }
 }
 // Function to save savings preferences
-Future<bool> addSavingsPreference(int transactionTypeId, double frequency,double percentage) async
+Future<bool> addSavingsPreference(int transactionTypeId, int frequency,int percentage,String savings_preference_start_date,String savings_preference_end_date) async
 {
   try {
     Map<String, dynamic> postDataPayload = {
-      "transaction_type": transactionTypeId,
-      "percentage_value": frequency,
-      "frequency_value" : percentage,
+      "transaction_type_name": transactionTypeId,
+      "frequency": frequency,
+      "percentage" : percentage,
+      "savings_preference_start_date" : savings_preference_start_date,
+      "savings_preference_end_date" : savings_preference_end_date
       // Add other data key-value pairs as needed
     };
       await postData("create-customer-saving-preferences/centtravy@gmail.com/",postDataPayload);

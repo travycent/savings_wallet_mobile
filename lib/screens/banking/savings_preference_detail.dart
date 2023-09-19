@@ -25,7 +25,7 @@ class SavingsPreferenceDetailPage extends StatelessWidget {
                 DateTime endDate = DateTime.parse(savingsPreferencesData.savingsPreferenceEndDate!);
                 String formattedEndDate= DateFormat('yyyy/MM/dd').format(endDate);
                 //Extract the type
-                String transactionType = savingsPreferencesData.transactionType!;
+                String transactionType = savingsPreferencesData.transactionType! ?? "";
                 //Extract the percentage
                 String percentageValue = savingsPreferencesData.percentageValue!.toString();
                 //Extract the frequency
