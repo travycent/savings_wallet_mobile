@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nssf_e_wallet/models/transactions_model.dart';
 import 'package:nssf_e_wallet/core/functions.dart';
+import 'package:intl/intl.dart';
 class AddSavingsPreferencePage extends StatefulWidget {
   const AddSavingsPreferencePage({ Key? key }) : super(key: key);
 
@@ -15,6 +16,8 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
   List<TransactionTypesData>? _transactionTypesItems = [];
   List<FrequencyData>? _selectedFrequenciesItems = [];
   List<PercentageLimitsData>? _selectedPercentagesItems = [];
+  final TextEditingController _startDateTextFieldController = TextEditingController();
+  final TextEditingController _endDateTextFieldController = TextEditingController();
   bool _loading = false;
    // Callback function to update the loading state
   void setLoading(bool loading) {
@@ -142,6 +145,63 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 10.0),
+                        TextField(
+                          controller: _startDateTextFieldController,
+                          
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.calendar_today),
+                            hintText: "Start Date",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                          readOnly: true,
+                          onTap: () async{
+                            //implement the show date picker
+                            DateTime? _selectedDate = await showDatePicker(context: context, 
+                              initialDate: DateTime.now(), 
+                              firstDate: DateTime.now(), 
+                              lastDate: DateTime(2101)
+                            );
+                            if(_selectedDate !=null)
+                            {
+                              String _formattedDate = DateFormat("yyyy-MM-dd").format(_selectedDate);
+
+                              setState(() {
+                                _startDateTextFieldController.text=_formattedDate.toString();
+                              });
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 10.0),
+                        TextField(
+                          controller: _endDateTextFieldController,
+                          decoration: const InputDecoration(
+                            icon: Icon(Icons.calendar_today),
+                            hintText: "End Date",
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                          readOnly: true,
+                          onTap: () async{
+                            //implement the show date picker
+                            DateTime? _selectedDate = await showDatePicker(context: context, 
+                              initialDate: DateTime.now(), 
+                              firstDate: DateTime.now(), 
+                              lastDate: DateTime(2101)
+                            );
+                            if(_selectedDate !=null)
+                            {
+                              String _formattedDate = DateFormat("yyyy-MM-dd").format(_selectedDate);
+
+                              setState(() {
+                                _endDateTextFieldController.text=_formattedDate.toString();
+                              });
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -157,13 +217,30 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
                         100.0 *
                         MediaQuery.of(context).size.width,
                   ),
-                  onPressed: () {
-                    // Todo
+                  onPressed: () async{
+                    //display loading
+                    setLoading(true);
+                    int? transactionTypeId = int.tryParse(_selectedTransaction!);
+                    double? frequency = double.tryParse(_selectedFrequency!);
+                    double? percentage = double.tryParse(_selectedPercentage!);                
+                    bool result=await addSavingsPreference(transactionTypeId!, frequency!, percentage!) ;
+                    //display loading
+                    setLoading(false);
+                    if(result)
+                    {
+                      //_amountTextFieldController.clear();
+                      //_recepientTextFieldController.clear();
+                      showToast('Preferences Successfully');
+                    }
                   },
                 ),
               ),
             ],
           ),
+          if (_loading)
+            const Center(
+              child: CircularProgressIndicator(), // Show circular progress indicator when loading
+            ),
         ],
       )
     );
@@ -172,6 +249,8 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
   Future<void> initializeData() async {
     try
     {
+      //display loading
+      setLoading(true);
       TransactionTypes transactionTypes= await geTransactionsTypes();
       setState(() {
           _transactionTypesItems = transactionTypes.data ?? []; // Update the list with parsed data
@@ -184,9 +263,13 @@ class _AddSavingsPreferencePageState extends State<AddSavingsPreferencePage> {
       setState(() {
           _selectedPercentagesItems = percentageLimits.data ?? []; // Update the list with parsed data
       });
+      //disable loading
+      setLoading(false);
 
     }
     catch (e) {
+      //disable loading
+      setLoading(false);
       showToast('$e');
     }
   }

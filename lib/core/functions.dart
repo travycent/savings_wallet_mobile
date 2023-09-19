@@ -55,6 +55,23 @@ Future<bool> addTransaction(double amount, int transactionTypeId,String payee) a
     return false;
   }
 }
+// Function to save savings preferences
+Future<bool> addSavingsPreference(int transactionTypeId, double frequency,double percentage) async
+{
+  try {
+    Map<String, dynamic> postDataPayload = {
+      "transaction_type": transactionTypeId,
+      "percentage_value": frequency,
+      "frequency_value" : percentage,
+      // Add other data key-value pairs as needed
+    };
+      await postData("create-customer-saving-preferences/centtravy@gmail.com/",postDataPayload);
+      return true;
+  } catch (e) {
+    showToast('$e');
+    return false;
+  }
+}
 // Function to get Transactions
 Future<TransactionTypes> geTransactionsTypes() async {
       try {
