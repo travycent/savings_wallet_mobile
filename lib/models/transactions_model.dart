@@ -131,3 +131,107 @@ class TransactionTypesData {
   }
 }
 
+class Frequency {
+  String? success;
+  int? statusCode;
+  List<FrequencyData>? data;
+
+  Frequency({this.success, this.statusCode, this.data});
+
+  Frequency.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    statusCode = json['status_code'];
+    if (json['data'] != null) {
+      data = <FrequencyData>[];
+      json['data'].forEach((v) {
+        data!.add(new FrequencyData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['status_code'] = this.statusCode;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class FrequencyData {
+  int? frequencyId;
+  int? frequency;
+  String? createdOn;
+
+  FrequencyData({this.frequencyId, this.frequency, this.createdOn});
+
+  FrequencyData.fromJson(Map<String, dynamic> json) {
+    frequencyId = json['frequency_id'];
+    frequency = json['frequency'];
+    createdOn = json['created_on'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['frequency_id'] = this.frequencyId;
+    data['frequency'] = this.frequency;
+    data['created_on'] = this.createdOn;
+    return data;
+  }
+}
+
+class PercentageLimits {
+  String? success;
+  int? statusCode;
+  List<PercentageLimitsData>? data;
+
+  PercentageLimits({this.success, this.statusCode, this.data});
+
+  PercentageLimits.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    statusCode = json['status_code'];
+    if (json['data'] != null) {
+      data = <PercentageLimitsData>[];
+      json['data'].forEach((v) {
+        data!.add(new PercentageLimitsData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['status_code'] = this.statusCode;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class PercentageLimitsData {
+  int? percentageId;
+  int? percentage;
+  String? createdOn;
+
+  PercentageLimitsData({this.percentageId, this.percentage, this.createdOn});
+
+  PercentageLimitsData.fromJson(Map<String, dynamic> json) {
+    percentageId = json['percentage_id'];
+    percentage = json['percentage'];
+    createdOn = json['created_on'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['percentage_id'] = this.percentageId;
+    data['percentage'] = this.percentage;
+    data['created_on'] = this.createdOn;
+    return data;
+  }
+}
+
+
+
