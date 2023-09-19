@@ -10,7 +10,6 @@ import 'package:nssf_e_wallet/screens/banking/add_deposit_page.dart';
 import 'package:nssf_e_wallet/screens/banking/send_page.dart';
 import 'package:nssf_e_wallet/screens/banking/paybill_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_target_page.dart';
-import 'package:nssf_e_wallet/screens/banking/add_savings_preferences_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_preferences_page.dart';
 import 'package:nssf_e_wallet/core/functions.dart';
 class HomePage extends StatefulWidget {
@@ -159,12 +158,12 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
-                    _buildGridItem('Deposit', const DepositPage(), Colors.orange),
+                    _buildGridItem('Preferences', const SavingsPreferencesPage(), Colors.green),
+                    _buildGridItem('Target', const SavingsTargetPage(), Colors.teal),
                     _buildGridItem('Send', const SendPage(), Colors.red),
                     _buildGridItem('Pay Bill', const PayBillPage(), Colors.purple),
                     _buildGridItem('Withdraw', const WithdrawPage(), Colors.blue),
-                    _buildGridItem('Preferences', const SavingsPreferencesPage(), Colors.green),
-                    _buildGridItem('Target', const SavingsTargetPage(), Colors.teal),
+                    _buildGridItem('Deposit', const DepositPage(), Colors.orange),
                   ],
                 ),
               ],

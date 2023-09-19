@@ -16,7 +16,7 @@ class _SendPageState extends State<SendPage> {
   final TextEditingController _amountTextFieldController = TextEditingController();
   final TextEditingController _recepientTextFieldController = TextEditingController();
   bool _loading = false;
-     // Callback function to update the loading state
+  // Callback function to update the loading state
   void setLoading(bool loading) {
     setState(() {
       _loading = loading;
