@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nssf_e_wallet/providers/api_client.dart';
 import 'package:nssf_e_wallet/models/transactions_model.dart';
+import 'package:nssf_e_wallet/models/billers_model.dart';
 import 'dart:convert';
+import 'package:nssf_e_wallet/core/shared_preferences.dart';
+//logged email
+String loggedEmail = SharedPreferencesManager.getString("email");
 void showToast(String text)
 {
   Fluttertoast.showToast(
@@ -48,7 +52,7 @@ Future<bool> addTransaction(double amount, int transactionTypeId,String payee) a
       "payee" : payee,
       // Add other data key-value pairs as needed
     };
-      await postData("create-customer-transaction/centtravy@gmail.com/",postDataPayload);
+      await postData("create-customer-transaction/$loggedEmail/",postDataPayload);
       return true;
   } catch (e) {
     showToast('$e');
@@ -67,7 +71,7 @@ Future<bool> addSavingsPreference(int transactionTypeId, int frequency,int perce
       "savings_preference_end_date" : savings_preference_end_date
       // Add other data key-value pairs as needed
     };
-      await postData("create-customer-saving-preferences/centtravy@gmail.com/",postDataPayload);
+      await postData("create-customer-saving-preferences/$loggedEmail/",postDataPayload);
       return true;
   } catch (e) {
     showToast('$e');
@@ -109,6 +113,20 @@ Future<PercentageLimits> getPercentageLimits() async {
       //print('API Response: $data'); // Print the API response to the console
       PercentageLimits percentageLimits = PercentageLimits.fromJson(jsonDecode(data));
       return percentageLimits;
+
+    } catch (e) {
+      // print('Error fetching or parsing data: $e');
+      //showToast('$e');
+      rethrow;
+    }
+}
+// Function to get Billers
+Future<BillersModel> getBillers() async {
+      try {
+      String data = await fetchData("billers/");
+      // print('API Response: $data'); // Print the API response to the console
+      BillersModel billers = BillersModel.fromJson(jsonDecode(data));
+      return billers;
 
     } catch (e) {
       // print('Error fetching or parsing data: $e');

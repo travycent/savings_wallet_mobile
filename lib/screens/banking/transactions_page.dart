@@ -6,6 +6,9 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:nssf_e_wallet/core/functions.dart';
 import 'package:nssf_e_wallet/screens/banking/transaction_detail_page.dart';
+import 'package:nssf_e_wallet/core/shared_preferences.dart';
+//logged email
+String loggedEmail = SharedPreferencesManager.getString("email");
 class TransactionsPage extends StatefulWidget {
   const TransactionsPage({ Key? key }) : super(key: key);
 
@@ -28,7 +31,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
     try {
       //display loading
       setLoading(true);
-      String data = await fetchData("customer-transactions/centtravy@gmail.com/");
+      String data = await fetchData("customer-transactions/$loggedEmail/");
       // print('API Response: $data'); // Print the API response to the console
       
       CustomerTransactions customerTransactions = CustomerTransactions.fromJson(jsonDecode(data));
@@ -74,8 +77,18 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 DateTime dateTime = DateTime.parse(cardData[index].transactionDate!);
                 // Format the DateTime object using DateFormat from intl package
                 String formattedDatetime = DateFormat('yyyy/MM/dd, hh:mm a').format(dateTime);
+                //Transaction Type name
+                String transactionTypeString= cardData[index].transactionType ?? "";
                 //Extract the First Letter for the Avatar
-                String avatarText = cardData[index].transactionType?.substring(0, 1) ?? "";
+                String avatarText="";
+                if(transactionTypeString == "Save Wallet")
+                {
+                  avatarText="SW";
+                }
+                else
+                {
+                  avatarText = cardData[index].transactionType?.substring(0, 1) ?? "";
+                }
                 
                 // Format the transactionAmount as UGX currency string
               String formattedAmount = NumberFormat.currency(

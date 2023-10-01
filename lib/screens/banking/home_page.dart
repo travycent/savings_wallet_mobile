@@ -12,6 +12,9 @@ import 'package:nssf_e_wallet/screens/banking/paybill_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_target_page.dart';
 import 'package:nssf_e_wallet/screens/banking/savings_preferences_page.dart';
 import 'package:nssf_e_wallet/core/functions.dart';
+import 'package:nssf_e_wallet/core/shared_preferences.dart';
+//logged email
+String loggedEmail = SharedPreferencesManager.getString("email");
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -207,7 +210,7 @@ class _HomePageState extends State<HomePage> {
   // Function used to return wallet balance
   Future<void> getCustomerWallets() async {
   try {
-    String data = await fetchData("customer-wallet/centtravy@gmail.com/");
+    String data = await fetchData("customer-wallet/$loggedEmail/");
     // print('API Response: $data'); // Print the API response to the console
     CustomerWallet customerWallet = CustomerWallet.fromJson(jsonDecode(data));
 

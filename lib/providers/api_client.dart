@@ -39,7 +39,8 @@ Future<String> fetchData(String apiUrl) async{
     }
     else{
       // Error response from the server
-      throw ApiException('Server responded with ${response.statusCode}: ${response.reasonPhrase}');
+      final errorMessage = json.decode(response.body)['message'];
+      throw ApiException('Server responded with ${response.statusCode}: $errorMessage');
     }
 
   } catch (e) {
@@ -76,8 +77,8 @@ Future<String> postData(String apiUrl,Map<String, dynamic> data) async{
     }
     else{
       // Error response from the server
-      // final errorMessage = response.body;
-      throw ApiException('Server responded with ${response.statusCode}: ${response.reasonPhrase}');
+      final errorMessage = json.decode(response.body)['message'];
+      throw ApiException('Server responded with ${response.statusCode}: $errorMessage');
     }
 
   } catch (e) {
@@ -112,8 +113,8 @@ Future<void> deleteData(String apiUrl) async{
       print('Response: ${response.body}');
     }
     else{
-      // Error response from the server
-      throw ApiException('Server responded with ${response.statusCode}: ${response.reasonPhrase}');
+      final errorMessage = json.decode(response.body)['message'];
+      throw ApiException('Server responded with ${response.statusCode}: $errorMessage');
     }
 
   } catch (e) {

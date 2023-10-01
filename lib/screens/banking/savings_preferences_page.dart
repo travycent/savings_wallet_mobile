@@ -157,7 +157,7 @@ class _SavingsPreferencesPageState extends State<SavingsPreferencesPage> {
   try {
     //display loading
     setLoading(true);
-    String data = await fetchData("get-customer-saving-preferences/centtravy@gmail.com/");
+    String data = await fetchData("get-customer-saving-preferences/$loggedEmail/");
     // print('API Response: $data'); // Print the API response to the console
     SavingsPreferencesModel savingsPreferencesModel = SavingsPreferencesModel.fromJson(jsonDecode(data));
     // print('Parsed CustomerTransactions: $customerTransactions'); // Print the parsed object
