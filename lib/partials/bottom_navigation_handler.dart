@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nssf_e_wallet/screens/banking/home_page.dart';
 import 'package:nssf_e_wallet/screens/banking/transactions_page.dart';
+import 'package:nssf_e_wallet/screens/banking/profile_page.dart';
 
 class BottomNavigationHandler extends StatefulWidget {
   final int currentIndex;
@@ -50,7 +51,7 @@ class _BottomNavigationHandlerState extends State<BottomNavigationHandler> {
             // Navigate to AccountPage
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const TransactionsPage()),
+              MaterialPageRoute(builder: (context) =>  ProfilePage()),
             );
             break;
           // Add more cases if needed for other items
